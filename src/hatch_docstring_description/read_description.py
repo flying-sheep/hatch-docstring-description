@@ -1,14 +1,9 @@
-from collections.abc import Callable
+import ast
 from pathlib import Path
 from typing import Any, cast
 
 from hatchling.builders.wheel import WheelBuilder
 from hatchling.metadata.plugin.interface import MetadataHookInterface
-
-
-class DummyBuilder(WheelBuilder):
-    def get_version_api() -> dict[str, Callable[[str, dict], str]]:
-        return {}
 
 
 class ReadDescriptionHook(MetadataHookInterface):
@@ -19,18 +14,23 @@ class ReadDescriptionHook(MetadataHookInterface):
     def update(self, metadata: dict[str, Any]) -> None:
         """See https://ofek.dev/hatch/latest/plugins/metadata-hook/ for more information."""
 
+        if "description" in metadata or "description" not in metadata.get("dynamic", []):
+            msg = "You need to add 'description' to your `dynamic` fields and not to `[project]`."
+            raise TypeError(msg)
+
         if self.config.get("path"):
             path = Path(self.root) / self.config["path"]
         else:
-            packages = cast(list[str], DummyBuilder(self.root).config.packages)
+            packages = cast(list[str], WheelBuilder(self.root).config.packages)
             if len(packages) != 1:
                 msg = "Multiple packages not supported" if len(packages) > 1 else f"No packages found in {self.root}"
                 raise RuntimeError(msg)
-            path = Path(self.root) / packages[0]
-            path = (path / "__init__.py") if path.is_dir() else path.with_name(path.name + ".py")
+            stem = Path(self.root) / packages[0]
+            path = (stem / "__init__.py") if stem.is_dir() else stem.with_name(f"{stem.name}.py")
         metadata["description"] = read_description(path)
 
 
 def read_description(pkg_file: Path) -> str:
     """Returns the first sentence of the docstring."""
-    return pkg_file.read_text()
+    mod = ast.parse(pkg_file.read_text(), pkg_file)
+    return ast.get_docstring(mod)
