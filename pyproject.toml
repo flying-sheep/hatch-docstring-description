@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "hatch-docstring-description"
 dynamic = ["version", "description"]
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = "GPL-3.0-or-later"
 authors = [
   { name = "Philipp A.", email = "flying-sheep@web.de" },
@@ -83,22 +83,18 @@ select = [
   "YTT",
 ]
 ignore = [
-  # Allow non-abstract empty methods in abstract base classes
-  "B027",
-  # Allow boolean positional values in function calls, like `dict.get(... True)`
-  "FBT003",
   # Ignore checks for possible passwords
   "S105", "S106", "S107",
-  # Ignore complexity
-  "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
 ]
 
 [tool.ruff.isort]
 known-first-party = ["hatch_docstring_description"]
 
 [tool.ruff.per-file-ignores]
-# Tests can use magic values, assertions, and relative imports
-"tests/**/*" = ["PLR2004", "S101", "TID252"]
+"tests/**/*" = [
+  "ARG001", # fixtures can look like unused parameters
+  "S101", # tests can use magic values
+]
 
 [tool.coverage.run]
 source_pkgs = ["hatch_docstring_description"]
