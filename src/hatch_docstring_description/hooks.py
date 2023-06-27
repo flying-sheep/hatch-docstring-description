@@ -1,6 +1,6 @@
 from hatchling.plugin import hookimpl
 
-from .read_description_hook import ReadDescriptionHook
+from .read_description import ReadDescriptionHook
 
 
 @hookimpl

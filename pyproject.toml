@@ -49,11 +49,9 @@ cov = [
 python = ["3.8", "3.9", "3.10", "3.11"]
 
 [tool.black]
-target-version = ["py38"]
 line-length = 120
 
 [tool.ruff]
-target-version = "py38"
 line-length = 120
 select = [
   "A",
@@ -83,6 +81,8 @@ select = [
   "YTT",
 ]
 ignore = [
+  # Allow dict() syntax
+  "C408",
   # Ignore checks for possible passwords
   "S105", "S106", "S107",
 ]
