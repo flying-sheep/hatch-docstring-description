@@ -24,6 +24,5 @@ jobs:
         cache: 'pip'
     - run: pipx install hatch
     - run: pip install -e .
-    - run: hatch run test
-
-    # TODO: coverage
+    - run: hatch run test-cov
+    - uses: codecov/codecov-action@v3
