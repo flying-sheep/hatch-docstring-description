@@ -20,6 +20,7 @@ jobs:
       with:
         python-version: '3.11'
         cache: 'pip'
+    - run: pipx install hatch
     - run: pip install -e .
     - run: hatch run test
 
