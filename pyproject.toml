@@ -38,6 +38,7 @@ test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
 cov-report = [
   "- coverage combine",
+  "coverage xml",
   "coverage report",
 ]
 cov = [
@@ -100,6 +101,10 @@ known-first-party = ["hatch_docstring_description"]
 source_pkgs = ["hatch_docstring_description"]
 branch = true
 parallel = true
+data_file = ".cache/coverage"
+
+[tool.coverage.xml]
+output = ".cache/coverage.xml"
 
 [tool.coverage.paths]
 hatch_docstring_description = ["src/hatch_docstring_description"]

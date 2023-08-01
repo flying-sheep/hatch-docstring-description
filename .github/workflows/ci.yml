@@ -25,5 +25,6 @@ jobs:
     - run: pipx install hatch
     - run: pip install -e .
     - run: hatch run cov
-    - run: coverage xml
     - uses: codecov/codecov-action@v3
+      with:
+        files: .cache/coverage.xml
