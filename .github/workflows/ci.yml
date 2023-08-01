@@ -24,7 +24,7 @@ jobs:
         cache: 'pip'
     - run: pipx install hatch
     - run: pip install -e .
-    - run: hatch run test-cov
+    - run: hatch run cov
     - uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
