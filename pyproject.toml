@@ -23,7 +23,7 @@ classifiers = [
 dependencies = ["hatchling"]
 
 [project.entry-points.hatch]
-aws = "hatch_docstring_description.hooks"
+docstring-description = "hatch_docstring_description.hooks"
 
 [tool.hatch.version]
 source = "vcs"

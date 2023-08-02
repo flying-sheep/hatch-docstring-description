@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 from hatchling.metadata.core import ProjectMetadata
+from hatchling.plugin.manager import PluginManager
 
 from hatch_docstring_description.read_description import ReadDescriptionHook
 
@@ -22,3 +23,10 @@ def test_basic(tmp_path, basic_project):
     metadata = ProjectMetadata(tmp_path, None).config["project"]
     hook.update(metadata)
     assert metadata["description"] == "A docstring."
+
+
+def test_load_plugin():
+    pm = PluginManager()
+    pm.metadata_hook.collect(include_third_party=True)
+    plugin = pm.manager.get_plugin("docstring-description")
+    assert plugin.hatch_register_metadata() is ReadDescriptionHook
