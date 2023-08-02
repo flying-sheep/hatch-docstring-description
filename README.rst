@@ -9,7 +9,7 @@ Usage
 #. Include it as a plugin to your ``pyproject.toml``:
 
    .. code:: toml
-      
+
       [build-system]
       requires = ["hatchling", "hatch-docstring-description"]
       build-backend = "hatchling.build"
