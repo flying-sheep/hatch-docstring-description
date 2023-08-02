@@ -28,4 +28,5 @@ def test_basic(tmp_path, basic_project):
 def test_load_plugin():
     pm = PluginManager()
     pm.metadata_hook.collect(include_third_party=True)
-    assert pm.manager.has_plugin("docstring-description")
+    plugin = pm.manager.get_plugin("docstring-description")
+    assert plugin.hatch_register_metadata() is ReadDescriptionHook
