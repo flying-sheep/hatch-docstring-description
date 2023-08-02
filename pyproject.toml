@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "hatch-docstring-description"
 dynamic = ["version", "description"]
-readme = "README.md"
+readme = "README.rst"
 requires-python = ">=3.9"
 license = "GPL-3.0-or-later"
 authors = [
