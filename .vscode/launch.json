@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Test Configuration",
+            "type": "python",
+            "request": "launch",
+            "purpose": ["debug-test"],
+            "justMyCode": false,
+            "console": "internalConsole",
+            "env": {
+                "_PYTEST_RAISE": "1",
+            },
+        },
+    ],
+}

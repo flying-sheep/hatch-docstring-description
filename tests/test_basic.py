@@ -26,5 +26,6 @@ def test_basic(tmp_path, basic_project):
 
 
 def test_load_plugin():
-    pm = PluginManager()
-    assert pm.metadata_hook.get("docstring-description")
+    metadata_hook = PluginManager().metadata_hook
+    metadata_hook.collect(include_third_party=True)
+    assert metadata_hook.get("docstring-description")
