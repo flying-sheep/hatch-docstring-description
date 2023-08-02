@@ -4,19 +4,23 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hatch-docstring-description.svg)](https://pypi.org/project/hatch-docstring-description)
 [![Coverage](https://codecov.io/github/flying-sheep/hatch-docstring-description/branch/main/graph/badge.svg?token=FZCw1cXSTL)](https://codecov.io/github/flying-sheep/hatch-docstring-description)
 
------
+## Usage
 
-**Table of Contents**
+1. Include it as a plugin to your `pyproject.toml`:
 
-- [Installation](#installation)
-- [License](#license)
+   ```toml
+   [build-system]
+   requires = ["hatchling", "hatch-docstring-description"]
+   build-backend = "hatchling.build"
+   ```
 
-## Installation
+2. Mark your `description` field as `dynamic`:
 
-```console
-pip install hatch-docstring-description
-```
+   ```toml
+   [project]
+   dynamic = ["description"]
+   ```
 
 ## License
 
-`hatch-docstring-description` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+`hatch-docstring-description` is distributed under the terms of the [GPL 3 (or later)](https://spdx.org/licenses/GPL-3.0-or-later.html) license.
