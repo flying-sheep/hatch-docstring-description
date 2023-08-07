@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import ast
 from pathlib import Path
-from typing import Any, cast
+from typing import Any
 
-from hatchling.builders.wheel import WheelBuilder
+from hatchling.builders.wheel import WheelBuilder, WheelBuilderConfig
 from hatchling.metadata.plugin.interface import MetadataHookInterface
 
 
@@ -21,11 +23,13 @@ class ReadDescriptionHook(MetadataHookInterface):
         if self.config.get("path"):
             path = Path(self.root) / self.config["path"]
         else:
-            packages = cast(list[str], WheelBuilder(self.root).config.packages)
-            if len(packages) != 1:
-                msg = "Multiple packages not supported" if len(packages) > 1 else f"No packages found in {self.root}"
+            cfg: WheelBuilderConfig = WheelBuilder(self.root).config
+            if len(cfg.packages) != 1:
+                msg = (
+                    "Multiple packages not supported" if len(cfg.packages) > 1 else f"No packages found in {self.root}"
+                )
                 raise RuntimeError(msg)
-            stem = Path(self.root) / packages[0]
+            stem = Path(self.root) / cfg.packages[0]
             path = (stem / "__init__.py") if stem.is_dir() else stem.with_name(f"{stem.name}.py")
         metadata["description"] = read_description(path)
 
