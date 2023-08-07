@@ -9,16 +9,16 @@ readme = "README.rst"
 requires-python = ">=3.8"
 license = "GPL-3.0-or-later"
 authors = [
-  { name = "Philipp A.", email = "flying-sheep@web.de" },
+    { name = "Philipp A.", email = "flying-sheep@web.de" },
 ]
 # urls.Documentation = "https://github.com/flying-sheep/hatch-docstring-description#readme"
 urls.Issues = "https://github.com/flying-sheep/hatch-docstring-description/issues"
 urls.Source = "https://github.com/flying-sheep/hatch-docstring-description"
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
-  "Framework :: Hatch",
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Framework :: Hatch",
 ]
 dependencies = ["hatchling"]
 
@@ -37,13 +37,13 @@ dependencies = [
 test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
 cov-report = [
-  "- coverage combine",
-  "coverage xml",
-  "coverage report",
+    "- coverage combine",
+    "coverage xml",
+    "coverage report",
 ]
 cov = [
-  "test-cov",
-  "cov-report",
+    "test-cov",
+    "cov-report",
 ]
 
 [[tool.hatch.envs.all.matrix]]
@@ -54,47 +54,30 @@ line-length = 120
 
 [tool.ruff]
 line-length = 120
-select = [
-  "A",
-  "ARG",
-  "B",
-  "C",
-  "DTZ",
-  "E",
-  "EM",
-  "F",
-  "FBT",
-  "I",
-  "ICN",
-  "ISC",
-  "N",
-  "PLC",
-  "PLE",
-  "PLR",
-  "PLW",
-  "Q",
-  "RUF",
-  "S",
-  "T",
-  "TID",
-  "UP",
-  "W",
-  "YTT",
-]
+select = ["ALL"]
 ignore = [
-  # Allow dict() syntax
-  "C408",
-  # Ignore checks for possible passwords
-  "S105", "S106", "S107",
+    # No self types
+    "ANN101",
+    # Allow dict() syntax
+    "C408",
+    # Mutually exclusive checks
+    "D203", "D213",
+    # TODO comments are OK
+    "FIX002",
+    # Ignore checks for possible passwords
+    "S105", "S106", "S107",
 ]
+allowed-confusables = ["’", "×"]
 
 [tool.ruff.isort]
 known-first-party = ["hatch_docstring_description"]
 
 [tool.ruff.per-file-ignores]
 "tests/**/*" = [
-  "ARG001", # fixtures can look like unused parameters
-  "S101", # tests can use magic values
+    "ARG001", # fixtures can look like unused parameters
+    "D103", # test functions don’t need docstrings
+    "INP001", # test directories shouldn’t contain __init__.py
+    "S101", # tests can use magic values
 ]
 
 [tool.coverage.run]

@@ -1,3 +1,5 @@
+"""Implementation of the hook class."""
+
 from __future__ import annotations
 
 import ast
@@ -15,7 +17,6 @@ class ReadDescriptionHook(MetadataHookInterface):
 
     def update(self, metadata: dict[str, Any]) -> None:
         """See https://ofek.dev/hatch/latest/plugins/metadata-hook/ for more information."""
-
         if "description" in metadata or "description" not in metadata.get("dynamic", []):
             msg = "You need to add 'description' to your `dynamic` fields and not to `[project]`."
             raise TypeError(msg)
@@ -35,6 +36,6 @@ class ReadDescriptionHook(MetadataHookInterface):
 
 
 def read_description(pkg_file: Path) -> str:
-    """Returns the first sentence of the docstring."""
+    """Return the first sentence of the docstring."""
     mod = ast.parse(pkg_file.read_text(), pkg_file)
     return ast.get_docstring(mod)
