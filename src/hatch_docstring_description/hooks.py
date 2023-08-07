@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from hatchling.plugin import hookimpl
 
 from .read_description import ReadDescriptionHook
