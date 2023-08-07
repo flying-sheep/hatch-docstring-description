@@ -1,1 +1,1 @@
-"""Metadata hook"""
+"""Metadata hook."""
