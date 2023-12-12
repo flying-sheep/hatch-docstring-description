@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from textwrap import dedent
 from typing import TYPE_CHECKING, Any
 
 import pytest
@@ -95,7 +96,16 @@ def test_multi_package_error(multi_pkg_project: Path) -> None:
 
 
 def test_no_package_error(tmp_path: Path) -> None:
-    (tmp_path / "pyproject.toml").write_text("[project]\nname = 'mypkg'\ndynamic = ['description']\n")
+    code = dedent(
+        """\
+        [project]
+        name = 'mypkg'
+        dynamic = ['description']
+        [tool.hatch.build.targets.wheel]
+        include = ['pyproject.toml']
+        """,
+    )
+    (tmp_path / "pyproject.toml").write_text(code)
     hook, metadata = mk_hook(tmp_path)
     with pytest.raises(RuntimeError, match=r"No packages found"):
         hook.update(metadata)
