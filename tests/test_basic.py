@@ -28,12 +28,12 @@ def basic_project(request: pytest.FixtureRequest, tmp_path: Path) -> Path:
     return project_path
 
 
-@pytest.fixture()
+@pytest.fixture
 def pkgs_dir(basic_project: Path) -> Path:
     return (basic_project / "src") if (basic_project / "src").is_dir() else basic_project
 
 
-@pytest.fixture()
+@pytest.fixture
 def multi_pkg_project(basic_project: Path, pkgs_dir: Path) -> Path:
     prefix = "src/" if pkgs_dir.name == "src" else ""
     with (basic_project / "pyproject.toml").open("a") as proj_file:
