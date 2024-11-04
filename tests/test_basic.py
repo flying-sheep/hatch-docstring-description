@@ -18,25 +18,26 @@ if TYPE_CHECKING:
 # https://github.com/flying-sheep/hatch-docstring-description/issues/14
 
 
+PYPROJECT_TOML_BASIC = """\
+[build-system]
+requires = ['hatchling', 'hatch-docstring-description']
+build-backend = 'hatchling.build'
+
+[project]
+name = 'mypkg'
+version = '1.0'
+requires-python = '>=3.9'
+dynamic = ['description']
+
+[tool.hatch.metadata.hooks.docstring-description]
+"""
+
+
 @pytest.fixture(params=["mypkg/__init__.py", "src/mypkg/__init__.py"])
 def basic_project(request: pytest.FixtureRequest, tmp_path: Path) -> Path:
     project_path = tmp_path / "mypkg"
     project_path.mkdir()  # error if it exists
-    (project_path / "pyproject.toml").write_text(
-        """
-        [build-system]
-        requires = ['hatchling', 'hatch-docstring-description']
-        build-backend = 'hatchling.build'
-
-        [project]
-        name = 'mypkg'
-        version = '1.0'
-        requires-python = '>=3.9'
-        dynamic = ['description']
-
-        [tool.hatch.metadata.hooks.docstring-description]
-        """,
-    )
+    (project_path / "pyproject.toml").write_text(PYPROJECT_TOML_BASIC)
     pkg_file_path = project_path / Path(request.param)
     pkg_file_path.parent.mkdir(parents=True, exist_ok=True)
     pkg_file_path.write_text('"""A docstring."""\n')
@@ -108,9 +109,7 @@ def test_explicit(basic_project: Path, pkgs_dir: Path) -> None:
     prefix = "src/" if pkgs_dir.name == "src" else ""
     (pkgs_dir / "mypkg" / "core.py").write_text('"""A docstring somewhere else."""\n')
     with (basic_project / "pyproject.toml").open("a") as proj_file:
-        proj_file.write(
-            f"[tool.hatch.metadata.hooks.docstring-description]\npath = ['{prefix}mypkg/core.py']\n",
-        )
+        proj_file.write(f"path = ['{prefix}mypkg/core.py']\n")
     hook, metadata = mk_hook(basic_project)
     hook.update(metadata)
     assert metadata["description"] == "A docstring somewhere else."
