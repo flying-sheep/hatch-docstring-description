@@ -29,22 +29,11 @@ docstring-description = "hatch_docstring_description.hooks"
 [tool.hatch.version]
 source = "vcs"
 
-[tool.hatch.envs.default]
+[tool.hatch.envs.hatch-test]
 dependencies = [
-  "coverage[toml]>=6.5",
-  "pytest",
-]
-[tool.hatch.envs.default.scripts]
-test = "pytest {args:tests}"
-test-cov = "coverage run -m pytest {args:tests}"
-cov-report = [
-    "- coverage combine",
-    "coverage xml",
-    "coverage report",
-]
-cov = [
-    "test-cov",
-    "cov-report",
+    "coverage[toml]>=6.5",
+    "pytest",
+    "build",
 ]
 
 [[tool.hatch.envs.all.matrix]]

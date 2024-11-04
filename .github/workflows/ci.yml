@@ -27,7 +27,7 @@ jobs:
           cache: "pip"
       - run: pipx install hatch
       - run: pip install -e .
-      - run: hatch run cov
+      - run: hatch test --cover --python=${{ matrix.python-version }}
       - uses: codecov/codecov-action@v3
         with:
           files: .cache/coverage.xml
