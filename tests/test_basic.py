@@ -99,7 +99,7 @@ def test_e2e(basic_project: Path, tmp_path: Path) -> None:
     with zipfile.ZipFile(out_dir / "mypkg-1.0-py3-none-any.whl", "r") as whl:
         metadata = Metadata.from_email(whl.open("mypkg-1.0.dist-info/METADATA").read().decode("utf-8"))
     assert metadata.name == "mypkg"
-    assert metadata.dynamic == []
+    assert metadata.dynamic is None
     assert metadata.summary == "A docstring."
 
 

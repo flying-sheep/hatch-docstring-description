@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import inspect
 from pathlib import Path
 from typing import Any
 
@@ -17,6 +18,9 @@ class ReadDescriptionHook(MetadataHookInterface):
 
     def update(self, metadata: dict[str, Any]) -> None:
         """See https://ofek.dev/hatch/latest/plugins/metadata-hook/ for more information."""
+        if ("update", __file__) in ((frame.function, frame.filename) for frame in inspect.stack()[1:]):
+            return
+
         if "description" in metadata or "description" not in metadata.get("dynamic", []):
             msg = "You need to add 'description' to your `dynamic` fields and not to `[project]`."
             raise TypeError(msg)
