@@ -21,6 +21,12 @@ Usage
       [project]
       dynamic = ["description"]
 
+#. And make sure Hatchling uses it:
+
+   .. code:: toml
+
+      [tool.hatch.metadata.hooks.docstring-description]
+
 License
 -------
 
