@@ -23,15 +23,19 @@ def basic_project(request: pytest.FixtureRequest, tmp_path: Path) -> Path:
     project_path = tmp_path / "mypkg"
     project_path.mkdir()  # error if it exists
     (project_path / "pyproject.toml").write_text(
-        "[build-system]\n"
-        "requires = ['hatchling', 'hatch-docstring-description']\n"
-        "build-backend = 'hatchling.build'\n"
-        "\n"
-        "[project]\n"
-        "name = 'mypkg'\n"
-        "version = '1.0'\n"
-        "requires-python = '>=3.9'\n"
-        "dynamic = ['description']\n",
+        """
+        [build-system]
+        requires = ['hatchling', 'hatch-docstring-description']
+        build-backend = 'hatchling.build'
+
+        [project]
+        name = 'mypkg'
+        version = '1.0'
+        requires-python = '>=3.9'
+        dynamic = ['description']
+
+        [tool.hatch.metadata.hooks.docstring-description]
+        """,
     )
     pkg_file_path = project_path / Path(request.param)
     pkg_file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -58,7 +62,7 @@ def get_hook_cls() -> type[ReadDescriptionHook]:
     pm = PluginManager()
     pm.metadata_hook.collect(include_third_party=True)
     plugin = pm.manager.get_plugin("docstring-description")
-    return plugin.hatch_register_metadata()
+    return plugin.hatch_register_metadata_hook()
 
 
 def mk_hook(project_path: Path) -> tuple[ReadDescriptionHook, dict[str, Any]]:
