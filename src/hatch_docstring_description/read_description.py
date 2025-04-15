@@ -56,4 +56,4 @@ def read_description(pkg_file: Path) -> str:
     """Return the first sentence of the docstring."""
     mod = ast.parse(pkg_file.read_text(), pkg_file)
     docstring = ast.get_docstring(mod)
-    return docstring.split("\n\n", 1)[0]
+    return docstring.strip().split("\n\n", 1)[0]
