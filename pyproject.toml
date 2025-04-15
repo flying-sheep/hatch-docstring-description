@@ -1,74 +1,71 @@
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+requires = [ "hatch-vcs", "hatchling" ]
 
 [project]
 name = "hatch-docstring-description"
-dynamic = ["version", "description"]
 readme = "README.rst"
-requires-python = ">=3.9"
 license = "GPL-3.0-or-later"
 authors = [
-    { name = "Philipp A.", email = "flying-sheep@web.de" },
+  { name = "Philipp A.", email = "flying-sheep@web.de" },
 ]
+requires-python = ">=3.9"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Framework :: Hatch",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+dynamic = [ "description", "version" ]
+dependencies = [ "hatchling" ]
 # urls.Documentation = "https://github.com/flying-sheep/hatch-docstring-description#readme"
 urls.Issues = "https://github.com/flying-sheep/hatch-docstring-description/issues"
 urls.Source = "https://github.com/flying-sheep/hatch-docstring-description"
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Framework :: Hatch",
-    "Typing :: Typed",
-]
-dependencies = ["hatchling"]
-
-[project.entry-points.hatch]
-docstring-description = "hatch_docstring_description.hooks"
+entry-points.hatch.docstring-description = "hatch_docstring_description.hooks"
 
 [tool.hatch.version]
 source = "vcs"
 
 [tool.hatch.envs.hatch-test]
 dependencies = [
-    "coverage[toml]>=6.5",
-    "pytest",
-    "build",
+  "coverage[toml]>=6.5",
+  "pytest",
+  "build",
 ]
 
 [[tool.hatch.envs.all.matrix]]
-python = ["3.9", "3.10", "3.11", "3.12"]
+python = [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
 
 [tool.ruff]
 line-length = 120
-select = ["ALL"]
-ignore = [
-    # No self types
-    "ANN101",
-    # Allow dict() syntax
-    "C408",
-    # Mutually exclusive checks
-    "D203", "D213",
-    # TODO comments are OK
-    "FIX002",
-    # Ignore checks for possible passwords
-    "S105", "S106", "S107",
+lint.select = [ "ALL" ]
+lint.ignore = [
+  "C408",   # Allow dict() syntax
+  "COM812", # Trailing commas handled by formatter
+  "D203",   # Prefer D211 for no blank line between class and docstring
+  "D213",   # Prefer D212 for docstring summary on first line
+  "FIX002", # TODO comments are OK
+  "S105",   # Ignore checks for possible passwords
+  "S106",   # ditto
+  "S107",   # ditto
 ]
-allowed-confusables = ["’", "×"]
-
-[tool.ruff.isort]
-known-first-party = ["hatch_docstring_description"]
-
-[tool.ruff.per-file-ignores]
-"tests/**/*" = [
-    "ARG001", # fixtures can look like unused parameters
-    "D103", # test functions don’t need docstrings
-    "INP001", # test directories shouldn’t contain __init__.py
-    "S101", # tests can use magic values
+lint.per-file-ignores."tests/**/*" = [
+  "ARG001", # fixtures can look like unused parameters
+  "D103",   # test functions don’t need docstrings
+  "INP001", # test directories shouldn’t contain __init__.py
+  "S101",   # tests can use magic values
 ]
+lint.allowed-confusables = [ "×", "’" ]
+lint.isort.known-first-party = [ "hatch_docstring_description" ]
 
 [tool.coverage.run]
-source_pkgs = ["hatch_docstring_description"]
+source_pkgs = [ "hatch_docstring_description" ]
 branch = true
 parallel = true
 data_file = ".cache/coverage"
@@ -77,7 +74,7 @@ data_file = ".cache/coverage"
 output = ".cache/coverage.xml"
 
 [tool.coverage.paths]
-hatch_docstring_description = ["src/hatch_docstring_description"]
+hatch_docstring_description = [ "src/hatch_docstring_description" ]
 
 [tool.coverage.report]
 exclude_lines = [
