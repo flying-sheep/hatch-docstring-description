@@ -89,6 +89,21 @@ def test_load_plugin() -> None:
     assert get_hook_cls() is ReadDescriptionHook
 
 
+@pytest.mark.parametrize(
+    ("docstring", "expected"),
+    [
+        pytest.param("\nA docstring.", "A docstring.", id="strip"),
+        pytest.param("1.\n\n2", "1.", id="split"),
+    ],
+)
+def test_read_description(tmp_path: Path, docstring: str, expected: str) -> None:
+    from hatch_docstring_description.read_description import read_description
+
+    path = tmp_path / "pkg.py"
+    path.write_text(repr(docstring))
+    assert read_description(path) == expected
+
+
 def test_basic(basic_project: Path) -> None:
     hook, metadata = mk_hook(basic_project)
     hook.update(metadata)

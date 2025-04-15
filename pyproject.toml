@@ -4,6 +4,7 @@ requires = [ "hatch-vcs", "hatchling" ]
 
 [project]
 name = "hatch-docstring-description"
+description = "A hatchling plugin to read the description from the package docstring"
 readme = "README.rst"
 license = "GPL-3.0-or-later"
 authors = [
@@ -11,7 +12,7 @@ authors = [
 ]
 requires-python = ">=3.9"
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
   "Framework :: Hatch",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
@@ -22,7 +23,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dynamic = [ "description", "version" ]
+dynamic = [ "version" ]
 dependencies = [ "hatchling" ]
 # urls.Documentation = "https://github.com/flying-sheep/hatch-docstring-description#readme"
 urls.Issues = "https://github.com/flying-sheep/hatch-docstring-description/issues"
