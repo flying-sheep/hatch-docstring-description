@@ -1,14 +1,24 @@
 {
-    "[python]": {
+    "[python][toml][json][jsonc]": {
         "editor.formatOnSave": true,
+    },
+    "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.codeActionsOnSave": {
             "source.fixAll": "always",
             "source.organizeImports": "always",
         },
     },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml",
+    },
+    "[json][jsonc]": {
+        "editor.defaultFormatter": "biomejs.biome",
+    },
     "python.testing.pytestArgs": [],
-    "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.terminal.activateEnvironment": false,
+    // mirror settings from pyproject-fmt
+    "evenBetterToml.formatter.compactArrays": false,
+    "evenBetterToml.formatter.arrayAutoCollapse": false,
 }
