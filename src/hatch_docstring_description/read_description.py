@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import ast
 import inspect
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Any
 
 from hatchling.builders.wheel import WheelBuilder, WheelBuilderConfig
 from hatchling.metadata.plugin.interface import MetadataHookInterface
+from hatchling.metadata.utils import normalize_project_name
 
 
 class ReadDescriptionHook(MetadataHookInterface):
@@ -29,14 +30,26 @@ class ReadDescriptionHook(MetadataHookInterface):
             path = Path(self.root) / self.config["path"]
         else:
             cfg: WheelBuilderConfig = WheelBuilder(self.root).config
-            if len(cfg.packages) != 1:
-                msg = (
-                    "Multiple packages not supported" if len(cfg.packages) > 1 else f"No packages found in {self.root}"
-                )
+            if len(cfg.packages) == 0:
+                msg = f"No packages found in {self.root}."
                 raise RuntimeError(msg)
-            stem = Path(self.root) / cfg.packages[0]
+            if (pkg := _get_pkg(cfg)) is None:
+                msg = "Multiple packages are only supported if one matches the project name."
+                raise RuntimeError(msg)
+            stem = Path(self.root) / pkg
             path = (stem / "__init__.py") if stem.is_dir() else stem.with_name(f"{stem.name}.py")
         metadata["description"] = read_description(path)
+
+
+def _get_pkg(cfg: WheelBuilderConfig) -> PurePath | None:
+    """Get only package or package matching the project name."""
+    if len(cfg.packages) == 1:
+        return PurePath(cfg.packages[0])
+    for pkg in map(PurePath, cfg.packages):
+        pkg_name = pkg.name
+        if normalize_project_name(pkg_name) == cfg.builder.metadata.name:
+            return pkg
+    return None
 
 
 def read_description(pkg_file: Path) -> str:
