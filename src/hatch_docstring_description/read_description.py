@@ -55,4 +55,5 @@ def _get_pkg(cfg: WheelBuilderConfig) -> PurePath | None:
 def read_description(pkg_file: Path) -> str:
     """Return the first sentence of the docstring."""
     mod = ast.parse(pkg_file.read_text(), pkg_file)
-    return ast.get_docstring(mod)
+    docstring = ast.get_docstring(mod)
+    return docstring.split("\n\n", 1)[0]

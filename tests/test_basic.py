@@ -10,6 +10,8 @@ from hatchling.metadata.core import ProjectMetadata
 from hatchling.plugin.manager import PluginManager
 from packaging.metadata import Metadata
 
+from hatch_docstring_description.read_description import read_description
+
 if TYPE_CHECKING:
     from collections.abc import Callable
     from pathlib import Path
@@ -87,6 +89,13 @@ def test_load_plugin() -> None:
     from hatch_docstring_description.read_description import ReadDescriptionHook
 
     assert get_hook_cls() is ReadDescriptionHook
+
+
+@pytest.mark.parametrize(("docstring", "expected"), [("A docstring.", "A docstring."), ("1.\n\n2", "1.")])
+def test_read_description(tmp_path: Path, docstring: str, expected: str) -> None:
+    path = tmp_path / "pkg.py"
+    path.write_text(repr(docstring))
+    assert read_description(path) == expected
 
 
 def test_basic(basic_project: Path) -> None:

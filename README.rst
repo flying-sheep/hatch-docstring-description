@@ -3,6 +3,8 @@ hatch-docstring-description
 
 |PyPI Version| |PyPI Python Version| |Coverage|
 
+A ``hatchling`` plugin to read the ``description`` from the package docstring like ``flit`` does.
+
 Usage
 -----
 
