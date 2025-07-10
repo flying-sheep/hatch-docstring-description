@@ -2,19 +2,22 @@
 
 from __future__ import annotations
 
+import zipfile
 from textwrap import dedent
 from typing import TYPE_CHECKING, Any, Literal
 
 import pytest
+from build.__main__ import build_package
 from hatchling.metadata.core import ProjectMetadata
 from hatchling.plugin.manager import PluginManager
 from packaging.metadata import Metadata
+
+from hatch_docstring_description.read_description import ReadDescriptionHook, read_description
 
 if TYPE_CHECKING:
     from collections.abc import Callable
     from pathlib import Path
 
-    from hatch_docstring_description.read_description import ReadDescriptionHook
 
 # TODO(flying-sheep): should hatch support single file modules? "mypkg.py", "src/mypkg.py"
 # https://github.com/flying-sheep/hatch-docstring-description/issues/14
@@ -84,8 +87,6 @@ def mk_hook(project_path: Path) -> tuple[ReadDescriptionHook, dict[str, Any]]:
 
 
 def test_load_plugin() -> None:
-    from hatch_docstring_description.read_description import ReadDescriptionHook
-
     assert get_hook_cls() is ReadDescriptionHook
 
 
@@ -97,8 +98,6 @@ def test_load_plugin() -> None:
     ],
 )
 def test_read_description(tmp_path: Path, docstring: str, expected: str) -> None:
-    from hatch_docstring_description.read_description import read_description
-
     path = tmp_path / "pkg.py"
     path.write_text(repr(docstring))
     assert read_description(path) == expected
@@ -111,10 +110,6 @@ def test_basic(basic_project: Path) -> None:
 
 
 def test_e2e(basic_project: Path, tmp_path: Path) -> None:
-    import zipfile
-
-    from build.__main__ import build_package
-
     out_dir = tmp_path / "dist"
     build_package(
         srcdir=basic_project,
