@@ -29,6 +29,15 @@ Usage
 
       [tool.hatch.metadata.hooks.docstring-description]
 
+Contributing
+------------
+
+- Use Hatch_ to run the tests: ``hatch test``
+- Use pre-commit_ to lint: ``pre-commit run --all-files``
+
+.. _Hatch: https://hatch.pypa.io/latest
+.. _pre-commit: https://pre-commit.com
+
 License
 -------
 
