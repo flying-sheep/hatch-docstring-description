@@ -39,7 +39,7 @@ class ReadDescriptionHook(MetadataHookInterface):
             stem = Path(self.root) / pkg
             path = (stem / "__init__.py") if stem.is_dir() else stem.with_name(f"{stem.name}.py")
         metadata["description"] = read_description(path)
-        
+
         metadata["dynamic"] = [value for value in metadata["dynamic"] if value != "description"]
 
 
