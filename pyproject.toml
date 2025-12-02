@@ -40,7 +40,7 @@ dependencies = [
   "build",
 ]
 
-[[tool.hatch.envs.all.matrix]]
+[[tool.hatch.envs.hatch-test.matrix]]
 python = [ "3.14", "3.10" ]
 
 [tool.ruff]
