@@ -50,6 +50,7 @@ jobs:
       - run: hatch run ${{ matrix.env.name }}:coverage xml
       - uses: codecov/codecov-action@v5
         with:
+          fail_ci_if_error: true
           files: .cache/coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
   check:
