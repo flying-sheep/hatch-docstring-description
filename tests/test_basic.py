@@ -31,7 +31,7 @@ build-backend = 'hatchling.build'
 [project]
 name = '{proj_name}'
 version = '1.0'
-requires-python = '>=3.9'
+requires-python = '>=3.10'
 dynamic = ['description']
 
 [tool.hatch.metadata.hooks.docstring-description]
