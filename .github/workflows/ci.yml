@@ -47,8 +47,10 @@ jobs:
       - uses: astral-sh/setup-uv@v7
       - run: uv tool install hatch
       - run: hatch test --cover
+      - run: hatch run ${{ matrix.env.name }}:coverage xml
       - uses: codecov/codecov-action@v5
         with:
+          fail_ci_if_error: true
           files: .cache/coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
   check:
