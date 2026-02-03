@@ -6,7 +6,7 @@ requires = [ "hatch-vcs", "hatchling" ]
 name = "hatch-docstring-description"
 description = "A hatchling plugin to read the description from the package docstring"
 readme = "README.rst"
-license = "GPL-3.0-or-later"
+license = "GPL-3.0-OR-later"
 authors = [
   { name = "Philipp A.", email = "flying-sheep@web.de" },
 ]
@@ -30,9 +30,6 @@ urls.Issues = "https://github.com/flying-sheep/hatch-docstring-description/issue
 urls.Source = "https://github.com/flying-sheep/hatch-docstring-description"
 entry-points.hatch.docstring-description = "hatch_docstring_description.hooks"
 
-[tool.hatch.version]
-source = "vcs"
-
 [tool.hatch.envs.hatch-test]
 dependencies = [
   "coverage[toml]>=6.5",
@@ -42,6 +39,9 @@ dependencies = [
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = [ "3.14", "3.10" ]
+
+[tool.hatch.version]
+source = "vcs"
 
 [tool.ruff]
 line-length = 120
@@ -65,15 +65,6 @@ lint.per-file-ignores."tests/**/*" = [
 lint.allowed-confusables = [ "×", "’" ]
 lint.isort.known-first-party = [ "hatch_docstring_description" ]
 
-[tool.coverage.run]
-source_pkgs = [ "hatch_docstring_description" ]
-branch = true
-parallel = true
-data_file = ".cache/coverage"
-
-[tool.coverage.xml]
-output = ".cache/coverage.xml"
-
 [tool.coverage.paths]
 hatch_docstring_description = [ "src/hatch_docstring_description" ]
 
@@ -83,3 +74,11 @@ exclude_lines = [
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
 ]
+[tool.coverage.run]
+source_pkgs = [ "hatch_docstring_description" ]
+branch = true
+parallel = true
+data_file = ".cache/coverage"
+
+[tool.coverage.xml]
+output = ".cache/coverage.xml"
