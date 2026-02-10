@@ -30,18 +30,14 @@ urls.Issues = "https://github.com/flying-sheep/hatch-docstring-description/issue
 urls.Source = "https://github.com/flying-sheep/hatch-docstring-description"
 entry-points.hatch.docstring-description = "hatch_docstring_description.hooks"
 
-[tool.hatch.envs.hatch-test]
-dependencies = [
+[tool.hatch]
+envs.hatch-test.dependencies = [
   "coverage[toml]>=6.5",
   "pytest",
   "build",
 ]
-
-[[tool.hatch.envs.hatch-test.matrix]]
-python = [ "3.14", "3.10" ]
-
-[tool.hatch.version]
-source = "vcs"
+envs.hatch-test.matrix = [ { python = [ "3.14", "3.10" ] } ]
+version.source = "vcs"
 
 [tool.ruff]
 line-length = 120
@@ -65,20 +61,15 @@ lint.per-file-ignores."tests/**/*" = [
 lint.allowed-confusables = [ "×", "’" ]
 lint.isort.known-first-party = [ "hatch_docstring_description" ]
 
-[tool.coverage.paths]
-hatch_docstring_description = [ "src/hatch_docstring_description" ]
-
-[tool.coverage.report]
-exclude_lines = [
+[tool.coverage]
+paths.hatch_docstring_description = [ "src/hatch_docstring_description" ]
+report.exclude_lines = [
   "no cov",
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
 ]
-[tool.coverage.run]
-source_pkgs = [ "hatch_docstring_description" ]
-branch = true
-parallel = true
-data_file = ".cache/coverage"
-
-[tool.coverage.xml]
-output = ".cache/coverage.xml"
+run.source_pkgs = [ "hatch_docstring_description" ]
+run.branch = true
+run.parallel = true
+run.data_file = ".cache/coverage"
+xml.output = ".cache/coverage.xml"
