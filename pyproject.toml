@@ -62,14 +62,14 @@ lint.allowed-confusables = [ "×", "’" ]
 lint.isort.known-first-party = [ "hatch_docstring_description" ]
 
 [tool.coverage]
+run.branch = true
+run.data_file = ".cache/coverage"
+run.parallel = true
+run.source_pkgs = [ "hatch_docstring_description" ]
 paths.hatch_docstring_description = [ "src/hatch_docstring_description" ]
 report.exclude_lines = [
-  "no cov",
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
+  "no cov",
 ]
-run.source_pkgs = [ "hatch_docstring_description" ]
-run.branch = true
-run.parallel = true
-run.data_file = ".cache/coverage"
 xml.output = ".cache/coverage.xml"
