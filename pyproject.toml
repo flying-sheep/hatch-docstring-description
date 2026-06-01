@@ -31,13 +31,13 @@ urls.Source = "https://github.com/flying-sheep/hatch-docstring-description"
 entry-points.hatch.docstring-description = "hatch_docstring_description.hooks"
 
 [tool.hatch]
+version.source = "vcs"
 envs.hatch-test.dependencies = [
+  "build",
   "coverage[toml]>=6.5",
   "pytest",
-  "build",
 ]
 envs.hatch-test.matrix = [ { python = [ "3.14", "3.10" ] } ]
-version.source = "vcs"
 
 [tool.ruff]
 line-length = 120
