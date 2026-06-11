@@ -19,9 +19,9 @@ jobs:
     outputs:
       envs: ${{ steps.get-envs.outputs.envs }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with: { filter: 'blob:none', fetch-depth: 0 }
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8.2.0
         with: { enable-cache: false }
       - id: get-envs
         run: |
@@ -31,9 +31,10 @@ jobs:
               | { name: .key, python: .value.python }
             )')
           echo "envs=${ENVS_JSON}" | tee $GITHUB_OUTPUT
-
   test:
     needs: get-environments
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -44,15 +45,15 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.env.python }}
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8.2.0
       - run: uv tool install hatch
       - run: hatch test --cover
       - run: hatch run ${{ matrix.env.name }}:coverage xml
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           files: .cache/coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
   check:
     if: always()
     needs:
