@@ -45,6 +45,7 @@ lint.select = [ "ALL" ]
 lint.ignore = [
   "C408",   # Allow dict() syntax
   "COM812", # Trailing commas handled by formatter
+  "CPY001", # No need for copyright header with GPL
   "D203",   # Prefer D211 for no blank line between class and docstring
   "D213",   # Prefer D212 for docstring summary on first line
   "FIX002", # TODO comments are OK
