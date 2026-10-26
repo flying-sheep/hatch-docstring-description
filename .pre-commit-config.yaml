@@ -18,4 +18,4 @@ repos:
   - repo: https://github.com/biomejs/pre-commit
     rev: v2.6.3
     hooks:
-    - id: biome-format
+      - id: biome-format
